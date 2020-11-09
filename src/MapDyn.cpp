@@ -80,7 +80,7 @@ void write_map_param(string fname){
   pout << "mapdim = "<< MM.mapdim << endl;
 }
 /* -----------------------------------------------*/
-bool periodic_orbit(double y[], double fy[]){
+bool periodic_orbit(double y_all[]){
   // This function decide whether given initial condition is a periodic orbit or not.
   // If the initial point is not a periodic orbit, it uses the newton-raphson method 
   // to go to nearby guess.
