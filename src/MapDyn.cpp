@@ -42,7 +42,7 @@ void assign_map_param(){
   MM.time = 0.;    // Ignore for discrete map
   MM.dt = 1.e-4;   // Ignore for discrete map
   MM.period = 1.;
-  MM.iorbit = 0.;     // 0 if you already have the orbit, 
+  MM.iorbit = 1.;     // 0 if you already have the orbit, 
                       // 1 for calculating the orbit using Newton-Krylov
                       // 2 for letting the simulation evolve to a stable orbit.
   // 0 for no stability analysis, 1 for yes.
@@ -80,14 +80,16 @@ void write_map_param(string fname){
   pout << "mapdim = "<< MM.mapdim << endl;
 }
 /* -----------------------------------------------*/
-bool periodic_orbit(double y_all[]){
+// We can define this as a template function to pass 2d array.
+// though we need to move the function to MapDyn.h file.
+bool periodic_orbit(double y_all[][MM.mapdim+1]){
   // This function decide whether given initial condition is a periodic orbit or not.
   // If the initial point is not a periodic orbit, it uses the newton-raphson method 
   // to go to nearby guess.
   int iorbit = MM.iorbit;
   int period = MM.period;
   //
-  double step[ndim];
+  double step[ndim],fy[ndim];
   int MaxTry = (int) MaxIter/period;
   int mapdim = MM.mapdim;
   //
